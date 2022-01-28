@@ -6,38 +6,47 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
+import m.derakhshan.refectory.core.data.data_source.Setting
+import m.derakhshan.refectory.core.presentation.MainNavGraph
+import m.derakhshan.refectory.feature_authentication.presentation.authentication.composable.AuthenticationScreen
 import m.derakhshan.refectory.ui.theme.RefectoryTheme
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var setting: Setting
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RefectoryTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination =
+                        if (setting.isUserLoggedIn)
+                            MainNavGraph.AuthenticationScreen.route
+                        else
+                        // TODO: change below line to home screen
+                            MainNavGraph.AuthenticationScreen.route
+                    ) {
+                        composable(MainNavGraph.AuthenticationScreen.route) {
+                            AuthenticationScreen()
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    RefectoryTheme {
-        Greeting("Android")
     }
 }
