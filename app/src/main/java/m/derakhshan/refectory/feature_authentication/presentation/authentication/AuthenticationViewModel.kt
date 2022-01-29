@@ -1,5 +1,6 @@
 package m.derakhshan.refectory.feature_authentication.presentation.authentication
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,16 +10,24 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import m.derakhshan.refectory.core.data.model.Request
+import m.derakhshan.refectory.feature_authentication.domain.model.InvalidTaxCodeException
+import m.derakhshan.refectory.feature_authentication.domain.use_cases.AuthenticationUseCase
+import m.derakhshan.refectory.feature_authentication.domain.use_cases.LoginUseCase
+import java.lang.Exception
 import javax.inject.Inject
 
 
 @HiltViewModel
 class AuthenticationViewModel @Inject constructor(
-
+    private val useCase: AuthenticationUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(AuthenticationState())
     val state: State<AuthenticationState> = _state
+
+    private val _snackBar = MutableSharedFlow<AuthenticationSnackbarState>()
+    val snackBar = _snackBar.asSharedFlow()
 
     private val _navigate = MutableSharedFlow<AuthenticationNavigateState>()
     val navigate = _navigate.asSharedFlow()
@@ -36,18 +45,40 @@ class AuthenticationViewModel @Inject constructor(
                 )
                 login()
             }
+            is AuthenticationEvent.Snackbar -> {
+                viewModelScope.launch {
+                    _snackBar.emit(
+                        AuthenticationSnackbarState(message = event.message)
+                    )
+                }
+            }
         }
     }
 
-    private fun login(){
-        // TODO: implement login logic here
+    private fun login() {
         viewModelScope.launch {
-            delay(2000)
-            _navigate.emit(
-                AuthenticationNavigateState(
-                    navigateToSignUpScreen = true
+            try {
+                when (val result = useCase.loginUseCase(taxCode = _state.value.taxCode)) {
+                    is Request.Success -> {
+                        _navigate.emit(
+                            AuthenticationNavigateState(
+                                navigateToSignUpScreen = !result.data.isUserRegistered(),
+                                navigateToHomeScreen = result.data.isUserRegistered()
+                            )
+                        )
+                    }
+                    is Request.Error -> {
+                        _snackBar.emit(
+                            AuthenticationSnackbarState(result.message)
+                        )
+                    }
+                    is Request.Loading -> {}
+                }
+            } catch (e: Exception) {
+                _snackBar.emit(
+                    AuthenticationSnackbarState(e.message ?: "Unknown error.")
                 )
-            )
+            }
             _state.value = _state.value.copy(
                 isLoginExpanded = true
             )

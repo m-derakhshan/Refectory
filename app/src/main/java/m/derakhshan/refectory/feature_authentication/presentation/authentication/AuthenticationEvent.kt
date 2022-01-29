@@ -3,4 +3,5 @@ package m.derakhshan.refectory.feature_authentication.presentation.authenticatio
 sealed class AuthenticationEvent {
     data class TaxCodeChanged(val taxCode: String) : AuthenticationEvent()
     object Login : AuthenticationEvent()
+    data class Snackbar(val message: String) : AuthenticationEvent()
 }

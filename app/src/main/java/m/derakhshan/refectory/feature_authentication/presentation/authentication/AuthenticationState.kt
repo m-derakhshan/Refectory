@@ -11,3 +11,7 @@ data class AuthenticationNavigateState(
     val navigateToHomeScreen: Boolean = false,
     val navigateToSignUpScreen: Boolean = false
 )
+
+data class AuthenticationSnackbarState(
+    val message: String = "",
+)

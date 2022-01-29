@@ -1,19 +1,26 @@
 package m.derakhshan.refectory.feature_authentication.presentation.sign_up.composable
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import m.derakhshan.refectory.R
@@ -49,6 +56,40 @@ fun SignUpScreen(
                 fontFamily = fancyFont,
                 modifier = Modifier.fillMaxWidth()
             )
+
+            Box(
+                modifier = Modifier
+                    .size(150.dp)
+                    .shadow(5.dp, CircleShape)
+                    .background(MaterialTheme.colors.secondary)
+                    .clip(CircleShape)
+                    .align(Alignment.CenterHorizontally)
+                    .padding(MaterialTheme.spacing.extraSmall)
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.mipmap.default_avatar),
+                    contentDescription = "default avatar",
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+            OutlinedTextField(
+                value = state.taxCode,
+                onValueChange = {},
+                label = {
+                    Text(text = stringResource(id = R.string.tax_code))
+                },
+                modifier = Modifier
+                    .padding(
+                        horizontal = MaterialTheme.spacing.medium,
+                        vertical = MaterialTheme.spacing.small
+                    )
+                    .fillMaxWidth(),
+                enabled = false
+            )
+
+
             OutlinedTextField(
                 value = state.name,
                 onValueChange = { viewModel.onEvent(SignUpEvent.NameChanged(it)) },

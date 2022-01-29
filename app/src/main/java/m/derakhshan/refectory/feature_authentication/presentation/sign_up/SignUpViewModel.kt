@@ -2,12 +2,24 @@ package m.derakhshan.refectory.feature_authentication.presentation.sign_up
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val _state = mutableStateOf(SignUpState())
     val state: State<SignUpState> = _state
+
+    init {
+        _state.value = _state.value.copy(
+            taxCode = savedStateHandle.get<String>("tax_code") ?: _state.value.taxCode
+        )
+    }
 
     fun onEvent(event: SignUpEvent) {
         when (event) {

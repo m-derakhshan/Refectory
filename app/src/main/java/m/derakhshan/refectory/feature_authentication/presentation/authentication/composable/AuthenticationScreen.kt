@@ -1,5 +1,6 @@
 package m.derakhshan.refectory.feature_authentication.presentation.authentication.composable
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -34,12 +35,21 @@ fun AuthenticationScreen(
     val state = viewModel.state.value
     val verticalScroll = rememberScrollState()
 
-    LaunchedEffect(key1 = true, block = {
+    LaunchedEffect(key1 = state.taxCode, block = {
         viewModel.navigate.collectLatest { navigate ->
             if (navigate.navigateToHomeScreen)
             // TODO: navigate to home screen
-            else if (navigate.navigateToSignUpScreen)
-                navController.navigate(AuthenticationNavGraph.SignUpScreen.route)
+            else if (navigate.navigateToSignUpScreen) {
+                navController.navigate(AuthenticationNavGraph.SignUpScreen.route + "/tax_code=${state.taxCode}")
+            }
+        }
+    })
+
+    LaunchedEffect(key1 = true, block = {
+        viewModel.snackBar.collectLatest { snackBar ->
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = snackBar.message
+            )
         }
     })
 
@@ -77,9 +87,7 @@ fun AuthenticationScreen(
                     keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters),
                     onValueChange = { string ->
                         viewModel.onEvent(
-                            AuthenticationEvent.TaxCodeChanged(
-                                string
-                            )
+                            AuthenticationEvent.TaxCodeChanged(string)
                         )
                     },
                     label = {
