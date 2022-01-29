@@ -1,20 +1,15 @@
 package m.derakhshan.refectory.feature_authentication.presentation.authentication
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import m.derakhshan.refectory.core.data.model.Request
-import m.derakhshan.refectory.feature_authentication.domain.model.InvalidTaxCodeException
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.AuthenticationUseCase
-import m.derakhshan.refectory.feature_authentication.domain.use_cases.LoginUseCase
-import java.lang.Exception
 import javax.inject.Inject
 
 

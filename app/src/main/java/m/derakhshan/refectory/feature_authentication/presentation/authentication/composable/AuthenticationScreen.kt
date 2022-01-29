@@ -1,6 +1,5 @@
 package m.derakhshan.refectory.feature_authentication.presentation.authentication.composable
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
