@@ -11,8 +11,9 @@ class LoginUseCase {
     suspend operator fun invoke(taxCode: String): Request<UserModel> {
         if (taxCode.isBlank())
             throw InvalidTaxCodeException("Tax Code can't left blank.")
-
-        // TODO: implement login logic here and remove below lines 
+        if (taxCode.length !=16)
+            throw InvalidTaxCodeException("Length of Tax Code is not correct.")
+        // TODO: implement login logic here and remove below lines
         delay(2000)
         return Request.Success(UserModel(taxCode = taxCode))
     }
