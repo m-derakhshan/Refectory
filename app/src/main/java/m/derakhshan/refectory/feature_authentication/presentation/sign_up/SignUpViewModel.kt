@@ -19,22 +19,22 @@ class SignUpViewModel : ViewModel() {
             }
             is SignUpEvent.NameChanged -> {
                 _state.value = _state.value.copy(
-                    name = event.name
+                    name = enterRemoval(event.name)
                 )
             }
             is SignUpEvent.SurnameChanged -> {
                 _state.value = _state.value.copy(
-                    surname = event.surname
+                    surname = enterRemoval(event.surname)
                 )
             }
             is SignUpEvent.PhoneChanged -> {
                 _state.value = _state.value.copy(
-                    phoneNumber = event.phone
+                    phoneNumber = enterRemoval(event.phone)
                 )
             }
             is SignUpEvent.EmailChanged -> {
                 _state.value = _state.value.copy(
-                    email = event.email
+                    email = enterRemoval(event.email)
                 )
             }
             is SignUpEvent.PhotoChanged -> {
@@ -44,4 +44,7 @@ class SignUpViewModel : ViewModel() {
             }
         }
     }
+    
+    private fun enterRemoval(text: String) = text.replace("\n", "")
+
 }

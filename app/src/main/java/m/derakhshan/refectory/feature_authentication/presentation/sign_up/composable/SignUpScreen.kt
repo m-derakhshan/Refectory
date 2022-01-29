@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -54,7 +56,8 @@ fun SignUpScreen(
                         horizontal = MaterialTheme.spacing.medium,
                         vertical = MaterialTheme.spacing.small
                     )
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                maxLines = 1
             )
 
             OutlinedTextField(
@@ -68,7 +71,8 @@ fun SignUpScreen(
                         horizontal = MaterialTheme.spacing.medium,
                         vertical = MaterialTheme.spacing.small
                     )
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                maxLines = 1
             )
 
             OutlinedTextField(
@@ -82,7 +86,9 @@ fun SignUpScreen(
                         horizontal = MaterialTheme.spacing.medium,
                         vertical = MaterialTheme.spacing.small
                     )
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                maxLines = 1
             )
 
             OutlinedTextField(
@@ -96,7 +102,9 @@ fun SignUpScreen(
                         horizontal = MaterialTheme.spacing.medium,
                         vertical = MaterialTheme.spacing.small
                     )
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                maxLines = 1
             )
 
             LoadingButton(
