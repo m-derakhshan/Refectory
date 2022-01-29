@@ -1,7 +1,9 @@
 package m.derakhshan.refectory.feature_authentication.presentation.authentication.composable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,6 +32,7 @@ fun AuthenticationScreen(
 
     val scaffoldState = rememberScaffoldState()
     val state = viewModel.state.value
+    val verticalScroll = rememberScrollState()
 
     LaunchedEffect(key1 = true, block = {
         viewModel.navigate.collectLatest { navigate ->
@@ -47,7 +50,8 @@ fun AuthenticationScreen(
         Column(
             modifier = Modifier
                 .padding(it)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(verticalScroll),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

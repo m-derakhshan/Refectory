@@ -44,7 +44,7 @@ class SignUpViewModel : ViewModel() {
             }
         }
     }
-    
+
     private fun enterRemoval(text: String) = text.replace("\n", "")
 
 }
