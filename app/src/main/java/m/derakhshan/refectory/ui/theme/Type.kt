@@ -10,23 +10,33 @@ import m.derakhshan.refectory.R
 
 // Set of Material typography styles to start with
 
-val instagramFont = FontFamily(Font(
-    R.font.welcome_font,
-    weight = FontWeight.Normal
-))
+val fancyFont = FontFamily(
+    Font(
+        R.font.welcome_font,
+        weight = FontWeight.Normal
+    )
+)
+
+val attractiveFont = FontFamily(Font(R.font.attractive))
 
 val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = attractiveFont,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
-    )
-    /* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
     ),
+    button = TextStyle(
+        fontFamily = attractiveFont,
+        fontWeight = FontWeight.W500,
+        fontSize = 16.sp
+    ),
+    caption = TextStyle(
+        fontFamily = attractiveFont,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp
+    ),
+    /* Other default text styles to override
+
     caption = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,

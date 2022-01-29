@@ -8,12 +8,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import m.derakhshan.refectory.core.data.data_source.Setting
-import m.derakhshan.refectory.core.presentation.MainNavGraph
-import m.derakhshan.refectory.feature_authentication.presentation.authentication.composable.AuthenticationScreen
+import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
+import m.derakhshan.refectory.feature_authentication.presentation.authenticationNavigation
+
+
 import m.derakhshan.refectory.ui.theme.RefectoryTheme
 import javax.inject.Inject
 
@@ -25,6 +26,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val startDestination = if (setting.isUserLoggedIn)
+            AuthenticationNavGraph.Route.route
+        else
+        // TODO: change below line to home screen
+            AuthenticationNavGraph.Route.route
+
+
         setContent {
             RefectoryTheme {
                 Surface(
@@ -34,16 +43,9 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination =
-                        if (setting.isUserLoggedIn)
-                            MainNavGraph.AuthenticationScreen.route
-                        else
-                        // TODO: change below line to home screen
-                            MainNavGraph.AuthenticationScreen.route
+                        startDestination = startDestination
                     ) {
-                        composable(MainNavGraph.AuthenticationScreen.route) {
-                            AuthenticationScreen()
-                        }
+                        authenticationNavigation(navController = navController)
                     }
                 }
             }

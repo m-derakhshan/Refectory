@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">Refectory</string>
-    <string name="tax_code">Tax Code</string>
-    <string name="login">Login</string>
     <string name="welcome">Welcome</string>
+    <string name="join_us">Join Us</string>
+
+    <string name="tax_code">Tax Code</string>
+
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+
+
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="phone">Phone Number</string>
+    <string name="email">Email</string>
+
 </resources>

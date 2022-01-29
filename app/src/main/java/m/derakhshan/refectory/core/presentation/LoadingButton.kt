@@ -24,7 +24,7 @@ fun LoadingButton(
     val infiniteAnimation = rememberInfiniteTransition()
     val rotation by infiniteAnimation.animateFloat(
         initialValue = 0f,
-        targetValue = if (isExpanded) 720f else 0f,
+        targetValue = if (isExpanded) 0f else 720f,
         animationSpec = infiniteRepeatable(
             animation = tween(1500),
             repeatMode = RepeatMode.Reverse
@@ -37,7 +37,7 @@ fun LoadingButton(
             .height(50.dp)
     else
         modifier
-            .width(40.dp)
+            .width(50.dp)
             .height(50.dp)
             .rotate(rotation)
 
