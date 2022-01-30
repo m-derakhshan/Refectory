@@ -11,3 +11,13 @@ data class SignUpState(
     val photo: Uri? = null,
     val isSignUpExpanded: Boolean = true
 )
+
+
+data class SignUpSnackBarState(
+    val message: String = ""
+)
+
+
+data class SignUpNavigationState(
+    val navigateToHomeScreen: Boolean = false
+)

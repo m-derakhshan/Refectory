@@ -10,6 +10,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,10 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.core.presentation.LoadingButton
+import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
 import m.derakhshan.refectory.feature_authentication.presentation.sign_up.SignUpEvent
 import m.derakhshan.refectory.feature_authentication.presentation.sign_up.SignUpViewModel
+import m.derakhshan.refectory.feature_credit.presentation.HomeNavGraph
 import m.derakhshan.refectory.ui.theme.fancyFont
 import m.derakhshan.refectory.ui.theme.spacing
 
@@ -38,8 +42,29 @@ fun SignUpScreen(
     val state = viewModel.state.value
     val verticalScroll = rememberScrollState()
 
-    Scaffold(scaffoldState = scaffoldState) { innerPadding ->
+    LaunchedEffect(key1 = true, block = {
+        viewModel.snackBar.collectLatest { snackBar ->
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = snackBar.message
+            )
 
+        }
+
+    })
+
+    LaunchedEffect(key1 = true, block ={
+        viewModel.navigate.collectLatest { navigate ->
+            if (navigate.navigateToHomeScreen)
+                navController.navigate(HomeNavGraph.Route.route) {
+                    popUpTo(AuthenticationNavGraph.Route.route) {
+                        inclusive = true
+                    }
+                }
+        }
+    } )
+
+
+    Scaffold(scaffoldState = scaffoldState) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)

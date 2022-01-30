@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.AuthenticationUseCase
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.LoginUseCase
+import m.derakhshan.refectory.feature_authentication.domain.use_cases.SignUpUseCase
 import javax.inject.Singleton
 
 
@@ -17,7 +18,8 @@ class AuthenticationModule {
     @Provides
     fun provideAuthenticationUseCase(): AuthenticationUseCase {
         return AuthenticationUseCase(
-            loginUseCase = LoginUseCase()
+            loginUseCase = LoginUseCase(),
+            signUpUseCase = SignUpUseCase()
         )
     }
 }

@@ -4,16 +4,32 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
+import m.derakhshan.refectory.core.data.model.Request
+import m.derakhshan.refectory.core.data.model.UserModel
+import m.derakhshan.refectory.feature_authentication.domain.use_cases.AuthenticationUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val useCase: AuthenticationUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(SignUpState())
     val state: State<SignUpState> = _state
+
+    private val _snackBar = MutableSharedFlow<SignUpSnackBarState>()
+    val snackBar = _snackBar.asSharedFlow()
+
+
+    private val _navigate = MutableSharedFlow<SignUpNavigationState>()
+    val navigate = _navigate.asSharedFlow()
+
 
     init {
         _state.value = _state.value.copy(
@@ -24,10 +40,7 @@ class SignUpViewModel @Inject constructor(
     fun onEvent(event: SignUpEvent) {
         when (event) {
             is SignUpEvent.SignUp -> {
-                _state.value = _state.value.copy(
-                    isSignUpExpanded = false
-                )
-                // TODO: add sign up logic
+                signUp()
             }
             is SignUpEvent.NameChanged -> {
                 _state.value = _state.value.copy(
@@ -59,4 +72,42 @@ class SignUpViewModel @Inject constructor(
 
     private fun enterRemoval(text: String) = text.replace("\n", "")
 
+    private fun signUp() {
+        _state.value = _state.value.copy(
+            isSignUpExpanded = false
+        )
+
+        viewModelScope.launch {
+            val result = useCase.signUpUseCase(
+                UserModel(
+                    name = _state.value.name,
+                    surname = _state.value.surname,
+                    photo = _state.value.photo.toString(),
+                    phone = _state.value.phoneNumber,
+                    email = _state.value.email,
+                    taxCode = _state.value.taxCode
+                )
+            )
+            when (result) {
+                is Request.Success -> {
+                    _navigate.emit(
+                        SignUpNavigationState(
+                            navigateToHomeScreen = true
+                        )
+                    )
+                }
+                is Request.Error -> {
+                    _snackBar.emit(
+                        SignUpSnackBarState(message = result.message)
+                    )
+                }
+                is Request.Loading -> {
+
+                }
+            }
+            _state.value = _state.value.copy(
+                isSignUpExpanded = true
+            )
+        }
+    }
 }

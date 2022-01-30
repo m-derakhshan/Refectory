@@ -13,6 +13,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import m.derakhshan.refectory.core.data.data_source.Setting
 import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
 import m.derakhshan.refectory.feature_authentication.presentation.authenticationNavigation
+import m.derakhshan.refectory.feature_credit.presentation.HomeNavGraph
+import m.derakhshan.refectory.feature_credit.presentation.homeNavigation
 
 
 import m.derakhshan.refectory.ui.theme.RefectoryTheme
@@ -28,9 +30,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val startDestination = if (setting.isUserLoggedIn)
-            AuthenticationNavGraph.Route.route
+            HomeNavGraph.Route.route
         else
-        // TODO: change below line to home screen
             AuthenticationNavGraph.Route.route
 
 
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = startDestination
                     ) {
                         authenticationNavigation(navController = navController)
+                        homeNavigation(navController = navController)
                     }
                 }
             }
