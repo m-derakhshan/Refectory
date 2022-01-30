@@ -3,14 +3,18 @@ package m.derakhshan.refectory.feature_authentication.presentation.sign_up.compo
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.DraggableState
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
+import m.derakhshan.refectory.core.presentation.BackSwipeGesture
 import m.derakhshan.refectory.core.presentation.LoadingButton
 import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
 import m.derakhshan.refectory.feature_authentication.presentation.sign_up.SignUpEvent
@@ -32,6 +37,7 @@ import m.derakhshan.refectory.feature_credit.presentation.HomeNavGraph
 import m.derakhshan.refectory.ui.theme.fancyFont
 import m.derakhshan.refectory.ui.theme.spacing
 
+@ExperimentalMaterialApi
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel = hiltViewModel(),
@@ -41,6 +47,9 @@ fun SignUpScreen(
     val scaffoldState = rememberScaffoldState()
     val state = viewModel.state.value
     val verticalScroll = rememberScrollState()
+    var offset by remember {
+        mutableStateOf(0f)
+    }
 
     LaunchedEffect(key1 = true, block = {
         viewModel.snackBar.collectLatest { snackBar ->
@@ -52,7 +61,7 @@ fun SignUpScreen(
 
     })
 
-    LaunchedEffect(key1 = true, block ={
+    LaunchedEffect(key1 = true, block = {
         viewModel.navigate.collectLatest { navigate ->
             if (navigate.navigateToHomeScreen)
                 navController.navigate(HomeNavGraph.Route.route) {
@@ -61,17 +70,29 @@ fun SignUpScreen(
                     }
                 }
         }
-    } )
+    })
 
 
-    Scaffold(scaffoldState = scaffoldState) { innerPadding ->
+    Scaffold(
+        scaffoldState = scaffoldState,
+        modifier = Modifier.draggable(orientation = Orientation.Horizontal,
+            state = DraggableState { delta ->
+                offset += (delta * 0.2f)
+            },
+            onDragStopped = {
+                if (offset > 90)
+                    navController.navigateUp()
+                offset = 0f
+            }
+        )
+    ) { innerPadding ->
+
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(verticalScroll)
         ) {
-
             Text(
                 text = stringResource(id = R.string.join_us),
                 style = MaterialTheme.typography.h3,
@@ -79,7 +100,6 @@ fun SignUpScreen(
                 fontFamily = fancyFont,
                 modifier = Modifier.fillMaxWidth()
             )
-
             Box(
                 modifier = Modifier
                     .size(150.dp)
@@ -89,14 +109,12 @@ fun SignUpScreen(
                     .align(Alignment.CenterHorizontally)
                     .padding(MaterialTheme.spacing.extraSmall)
             ) {
-
                 Image(
                     painter = painterResource(id = R.mipmap.default_avatar),
                     contentDescription = "default avatar",
                     modifier = Modifier.fillMaxSize()
                 )
             }
-
             OutlinedTextField(
                 value = state.taxCode,
                 onValueChange = {},
@@ -111,8 +129,6 @@ fun SignUpScreen(
                     .fillMaxWidth(),
                 enabled = false
             )
-
-
             OutlinedTextField(
                 value = state.name,
                 onValueChange = { viewModel.onEvent(SignUpEvent.NameChanged(it)) },
@@ -127,7 +143,6 @@ fun SignUpScreen(
                     .fillMaxWidth(),
                 maxLines = 1
             )
-
             OutlinedTextField(
                 value = state.surname,
                 onValueChange = { viewModel.onEvent(SignUpEvent.SurnameChanged(it)) },
@@ -142,7 +157,6 @@ fun SignUpScreen(
                     .fillMaxWidth(),
                 maxLines = 1
             )
-
             OutlinedTextField(
                 value = state.phoneNumber,
                 onValueChange = { viewModel.onEvent(SignUpEvent.PhoneChanged(it)) },
@@ -158,7 +172,6 @@ fun SignUpScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 maxLines = 1
             )
-
             OutlinedTextField(
                 value = state.email,
                 onValueChange = { viewModel.onEvent(SignUpEvent.EmailChanged(it)) },
@@ -174,7 +187,6 @@ fun SignUpScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 maxLines = 1
             )
-
             LoadingButton(
                 buttonText = stringResource(id = R.string.sign_up),
                 isExpanded = state.isSignUpExpanded,
@@ -186,6 +198,12 @@ fun SignUpScreen(
             }
         }
 
+        IconButton(
+            onClick = { navController.navigateUp() }
+        ) {
+            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
+        }
+        BackSwipeGesture(offset = offset)
     }
 
 }
