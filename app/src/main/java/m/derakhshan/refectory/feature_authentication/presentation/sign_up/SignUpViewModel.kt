@@ -78,30 +78,38 @@ class SignUpViewModel @Inject constructor(
         )
 
         viewModelScope.launch {
-            val result = useCase.signUpUseCase(
-                UserModel(
-                    name = _state.value.name,
-                    surname = _state.value.surname,
-                    photo = _state.value.photo.toString(),
-                    phone = _state.value.phoneNumber,
-                    email = _state.value.email,
-                    taxCode = _state.value.taxCode
+
+            try {
+                val result = useCase.signUpUseCase(
+                    UserModel(
+                        name = _state.value.name,
+                        surname = _state.value.surname,
+                        photo = _state.value.photo.toString(),
+                        phone = _state.value.phoneNumber,
+                        email = _state.value.email,
+                        taxCode = _state.value.taxCode
+                    )
                 )
-            )
-            when (result) {
-                is Request.Success -> {
-                    _navigate.emit(
-                        SignUpNavigationState(
-                            navigateToHomeScreen = true
+                when (result) {
+                    is Request.Success -> {
+                        _navigate.emit(
+                            SignUpNavigationState(
+                                navigateToHomeScreen = true
+                            )
                         )
-                    )
+                    }
+                    is Request.Error -> {
+                        _snackBar.emit(
+                            SignUpSnackBarState(message = result.message)
+                        )
+                    }
                 }
-                is Request.Error -> {
-                    _snackBar.emit(
-                        SignUpSnackBarState(message = result.message)
-                    )
-                }
+            }catch (e:Exception){
+                _snackBar.emit(
+                    SignUpSnackBarState(message = e.message ?: "Unknown error.")
+                )
             }
+
             _state.value = _state.value.copy(
                 isSignUpExpanded = true
             )

@@ -42,7 +42,7 @@ class AuthenticationModule {
     fun provideAuthenticationUseCase(repository: AuthenticationRepository): AuthenticationUseCase {
         return AuthenticationUseCase(
             loginUseCase = LoginUseCase(repository = repository),
-            signUpUseCase = SignUpUseCase()
+            signUpUseCase = SignUpUseCase(repository=repository)
         )
     }
 }

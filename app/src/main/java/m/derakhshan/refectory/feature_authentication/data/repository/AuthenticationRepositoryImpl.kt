@@ -1,6 +1,7 @@
 package m.derakhshan.refectory.feature_authentication.data.repository
 
 import android.accounts.NetworkErrorException
+import android.util.Log
 import m.derakhshan.refectory.core.domain.model.Request
 import m.derakhshan.refectory.core.domain.model.UserModel
 import m.derakhshan.refectory.feature_authentication.data.data_source.AuthenticationAPI
@@ -25,13 +26,24 @@ class AuthenticationRepositoryImpl @Inject constructor(
                     is NetworkErrorException -> "Network error occurred."
                     is TimeoutException -> "Connection time out."
                     is UnknownHostException -> "Can't connect to network."
-                    else -> "Unknown error."
+                    else -> e.message ?: "Unknown error."
                 }
             )
         }
     }
 
     override suspend fun signUp(user: UserModel): Request<UserModel> {
-        return Request.Success(data = api.signUp(user).toUserModel())
+        return try {
+            Request.Success(data = api.signUp(user).toUserModel())
+        } catch (e: Exception) {
+            Request.Error(
+                message = when (e) {
+                    is NetworkErrorException -> "Network error occurred."
+                    is TimeoutException -> "Connection time out."
+                    is UnknownHostException -> "Can't connect to network."
+                    else -> e.message ?: "Unknown error."
+                }
+            )
+        }
     }
 }
