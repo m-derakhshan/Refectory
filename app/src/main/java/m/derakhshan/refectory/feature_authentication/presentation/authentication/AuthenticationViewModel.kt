@@ -1,5 +1,6 @@
 package m.derakhshan.refectory.feature_authentication.presentation.authentication
 
+
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -8,7 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import m.derakhshan.refectory.core.data.model.Request
+import m.derakhshan.refectory.core.domain.model.Request
+import m.derakhshan.refectory.feature_authentication.domain.model.InvalidTaxCodeException
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.AuthenticationUseCase
 import javax.inject.Inject
 
@@ -63,16 +65,12 @@ class AuthenticationViewModel @Inject constructor(
                         )
                     }
                     is Request.Error -> {
-                        _snackBar.emit(
-                            AuthenticationSnackbarState(result.message)
-                        )
+                        _snackBar.emit(AuthenticationSnackbarState(result.message))
                     }
-                    is Request.Loading -> {}
                 }
-            } catch (e: Exception) {
-                _snackBar.emit(
-                    AuthenticationSnackbarState(e.message ?: "Unknown error.")
-                )
+            }
+            catch (e: Exception) {
+                _snackBar.emit(AuthenticationSnackbarState(e.message ?: "Unknown error."))
             }
             _state.value = _state.value.copy(
                 isLoginExpanded = true

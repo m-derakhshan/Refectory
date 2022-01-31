@@ -1,4 +1,8 @@
-package m.derakhshan.refectory.core.data.model
+package m.derakhshan.refectory.core.domain.model
+
+
+
+
 
 data class UserModel(
     val name: String = "",

@@ -9,8 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import m.derakhshan.refectory.core.data.model.Request
-import m.derakhshan.refectory.core.data.model.UserModel
+import m.derakhshan.refectory.core.domain.model.Request
+import m.derakhshan.refectory.core.domain.model.UserModel
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.AuthenticationUseCase
 import javax.inject.Inject
 
@@ -100,9 +100,6 @@ class SignUpViewModel @Inject constructor(
                     _snackBar.emit(
                         SignUpSnackBarState(message = result.message)
                     )
-                }
-                is Request.Loading -> {
-
                 }
             }
             _state.value = _state.value.copy(

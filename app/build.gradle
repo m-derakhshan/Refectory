@@ -82,6 +82,12 @@ dependencies {
 }
 
 //------------------leak memory library---------------------//
-dependencies{
+dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+}
+
+//-------------retrofit-----------
+dependencies {
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
 }
