@@ -1,20 +1,16 @@
 package m.derakhshan.refectory.feature_credit.presentation.home.composable
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import m.derakhshan.refectory.ui.theme.LightBlue
-import m.derakhshan.refectory.ui.theme.LightYellow
 
 @Composable
 fun HomeScreen(
