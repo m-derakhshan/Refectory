@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
+import m.derakhshan.refectory.core.data.data_source.Setting
 import m.derakhshan.refectory.core.presentation.LoadingButton
 import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
 import m.derakhshan.refectory.feature_authentication.presentation.authentication.AuthenticationEvent
@@ -27,7 +28,8 @@ import m.derakhshan.refectory.ui.theme.spacing
 @Composable
 fun AuthenticationScreen(
     viewModel: AuthenticationViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    setting: Setting
 ) {
 
     val scaffoldState = rememberScaffoldState()
@@ -37,10 +39,12 @@ fun AuthenticationScreen(
     LaunchedEffect(key1 = state.taxCode, block = {
         viewModel.navigate.collectLatest { navigate ->
             if (navigate.navigateToHomeScreen)
-                navController.navigate(HomeNavGraph.Route.route){
-                    popUpTo(AuthenticationNavGraph.Route.route){
+                navController.navigate(HomeNavGraph.Route.route) {
+                    popUpTo(AuthenticationNavGraph.Route.route) {
                         inclusive = true
                     }
+                }.also {
+                    setting.isUserLoggedIn = true
                 }
             else if (navigate.navigateToSignUpScreen) {
                 navController.navigate(AuthenticationNavGraph.SignUpScreen.route + "/tax_code=${state.taxCode}")

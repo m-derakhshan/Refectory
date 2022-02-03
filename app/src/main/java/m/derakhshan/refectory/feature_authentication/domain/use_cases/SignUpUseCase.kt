@@ -1,12 +1,10 @@
 package m.derakhshan.refectory.feature_authentication.domain.use_cases
 
-import kotlinx.coroutines.delay
 import m.derakhshan.refectory.core.domain.model.Request
 import m.derakhshan.refectory.core.domain.model.UserModel
 import m.derakhshan.refectory.feature_authentication.domain.model.InvalidUserDataException
 import m.derakhshan.refectory.feature_authentication.domain.repository.AuthenticationRepository
 import javax.inject.Inject
-import kotlin.jvm.Throws
 
 class SignUpUseCase @Inject constructor(
     private val repository: AuthenticationRepository

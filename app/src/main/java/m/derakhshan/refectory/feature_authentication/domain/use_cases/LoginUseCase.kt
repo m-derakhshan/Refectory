@@ -5,7 +5,6 @@ import m.derakhshan.refectory.core.domain.model.UserModel
 import m.derakhshan.refectory.feature_authentication.domain.model.InvalidTaxCodeException
 import m.derakhshan.refectory.feature_authentication.domain.repository.AuthenticationRepository
 import javax.inject.Inject
-import kotlin.jvm.Throws
 
 class LoginUseCase @Inject constructor(
     private val repository: AuthenticationRepository

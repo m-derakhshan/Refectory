@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 kapt {
@@ -88,6 +89,8 @@ dependencies {
 
 //-------------retrofit-----------
 dependencies {
+
+    implementation 'com.google.firebase:firebase-database:20.0.3'
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
 }

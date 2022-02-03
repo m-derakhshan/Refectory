@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import m.derakhshan.refectory.core.domain.model.Request
-import m.derakhshan.refectory.feature_authentication.domain.model.InvalidTaxCodeException
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.AuthenticationUseCase
 import javax.inject.Inject
 

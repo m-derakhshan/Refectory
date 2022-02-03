@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
+import m.derakhshan.refectory.core.data.data_source.Setting
 import m.derakhshan.refectory.core.presentation.BackSwipeGesture
 import m.derakhshan.refectory.core.presentation.LoadingButton
 import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
@@ -41,7 +42,8 @@ import m.derakhshan.refectory.ui.theme.spacing
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    setting: Setting
 ) {
 
     val scaffoldState = rememberScaffoldState()
@@ -68,6 +70,8 @@ fun SignUpScreen(
                     popUpTo(AuthenticationNavGraph.Route.route) {
                         inclusive = true
                     }
+                }.also {
+                    setting.isUserLoggedIn = true
                 }
         }
     })
