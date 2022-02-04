@@ -36,7 +36,7 @@ fun HomeScreen(
                     lineWidth = 10f,
                     textSize = 35f,
                     data = mapOf(
-                        Pair("03-02", 10.03f),
+                        Pair("03-02", 100.03f),
                         Pair("04-02", 20.01f),
                         Pair("05-02", 30.02f),
                         Pair("06-02", 40.08f),
