@@ -2,10 +2,11 @@ package m.derakhshan.refectory.feature_credit.presentation
 
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.google.accompanist.pager.ExperimentalPagerApi
 import m.derakhshan.refectory.feature_credit.presentation.home.composable.HomeScreen
 import m.derakhshan.refectory.feature_credit.presentation.restaurant.composable.RestaurantScreen
 
-
+@ExperimentalPagerApi
 fun NavGraphBuilder.homeNavigation(
     navController: NavController
 ) {

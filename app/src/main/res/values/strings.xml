@@ -14,4 +14,7 @@
     <string name="phone">Phone Number</string>
     <string name="email">Email</string>
 
+
+    <string name="restaurants">Restaurants</string>
+
 </resources>

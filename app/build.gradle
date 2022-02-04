@@ -56,6 +56,7 @@ android {
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-util:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
@@ -90,8 +91,12 @@ dependencies {
 */
 //-------------retrofit-----------
 dependencies {
-
     implementation 'com.google.firebase:firebase-database:20.0.3'
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+}
+
+//---------------accompanist------------//
+dependencies {
+    implementation "com.google.accompanist:accompanist-pager:0.24.1-alpha"
 }
