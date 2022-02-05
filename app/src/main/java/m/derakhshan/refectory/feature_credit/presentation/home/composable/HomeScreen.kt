@@ -1,41 +1,63 @@
 package m.derakhshan.refectory.feature_credit.presentation.home.composable
 
+
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.util.lerp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.lerp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.core.presentation.plus
+import m.derakhshan.refectory.feature_credit.presentation.home.HomeViewModel
+import m.derakhshan.refectory.feature_credit.presentation.home.HomeViewModelEvent
 import m.derakhshan.refectory.ui.theme.LightBlue
 import m.derakhshan.refectory.ui.theme.spacing
 import kotlin.math.absoluteValue
 
+@InternalCoroutinesApi
 @ExperimentalPagerApi
+@ExperimentalAnimationApi
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
+    val state = viewModel.state.value
+    val pagerState = rememberPagerState()
 
+    LaunchedEffect(pagerState, block = {
+        snapshotFlow { pagerState.currentPage }.collectLatest { page ->
+            viewModel.onEvent(HomeViewModelEvent.CardPositionChanged(page))
+        }
+    })
 
     Scaffold(
         scaffoldState = scaffoldState,
     ) { innerPadding ->
         Column {
-            HorizontalPager(count = 2) { page ->
+            HorizontalPager(count = 2, state = pagerState) { page ->
                 Box(
                     Modifier
                         .graphicsLayer {
@@ -55,30 +77,30 @@ fun HomeScreen(
                             )
                         }
                 ) {
-                    if (page == 1)
-                        ChartCard(
-                            data = mapOf(
-                                Pair("03-02", 100.03f),
-                                Pair("04-02", 20.01f),
-                                Pair("05-02", 30.02f),
-                                Pair("06-02", 40.08f),
-                                Pair("07-02", 50.08f),
-                                Pair("08-02", 65.08f),
-                                Pair("09-02", 80.08f),
-                            )
+                    if (page == 0)
+                        ProfileCard(
+                            credit = state.userCredit,
+                            name = state.userName,
+                            taxCode = state.userTaxCode,
+                            image = state.userImage
                         )
-                    else
-                        ChartCard(
-                            data = mapOf(
-                                Pair("03-02", 10.03f),
-                                Pair("04-02", 2.01f),
-                                Pair("05-02", 3.02f),
-                                Pair("06-02", 4.08f),
-                                Pair("07-02", 5.08f),
-                                Pair("08-02", 6.08f),
-                                Pair("09-02", 8.08f),
+                    else ChartCard(data = state.creditChartData)
+                }
+            }
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                for (i in 0..1) {
+                    Box(
+                        modifier = Modifier
+                            .size(10.dp)
+                            .clip(CircleShape)
+                            .background(if (state.cardPosition == i) LightBlue else MaterialTheme.colors.background)
+                            .border(
+                                width = 1.dp,
+                                shape = CircleShape,
+                                color = MaterialTheme.colors.onBackground
                             )
-                        )
+                    )
+                    Spacer(modifier = Modifier.padding(MaterialTheme.spacing.extraSmall))
                 }
             }
             Text(

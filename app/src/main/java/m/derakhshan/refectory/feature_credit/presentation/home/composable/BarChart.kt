@@ -30,7 +30,7 @@ fun BarChart(
     horizontalSpace: Float = 150f,
     chartLineColor: Color = MaterialTheme.colors.onBackground
 ) {
-
+    // TODO: fix a bug in showing the chart when any of data is zero
     Box(modifier = modifier) {
 
         val coefficient = remember {

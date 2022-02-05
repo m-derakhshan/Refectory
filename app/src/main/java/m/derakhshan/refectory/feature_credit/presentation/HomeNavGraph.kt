@@ -1,5 +1,6 @@
 package m.derakhshan.refectory.feature_credit.presentation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -7,6 +8,7 @@ import m.derakhshan.refectory.feature_credit.presentation.home.composable.HomeSc
 import m.derakhshan.refectory.feature_credit.presentation.restaurant.composable.RestaurantScreen
 
 @ExperimentalPagerApi
+@ExperimentalAnimationApi
 fun NavGraphBuilder.homeNavigation(
     navController: NavController
 ) {
