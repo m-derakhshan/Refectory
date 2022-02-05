@@ -25,7 +25,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.core.presentation.plus
@@ -35,7 +34,6 @@ import m.derakhshan.refectory.ui.theme.LightBlue
 import m.derakhshan.refectory.ui.theme.spacing
 import kotlin.math.absoluteValue
 
-@InternalCoroutinesApi
 @ExperimentalPagerApi
 @ExperimentalAnimationApi
 @Composable
