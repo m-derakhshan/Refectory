@@ -80,6 +80,13 @@ dependencies {
 }
 
 dependencies {
+    def roomVersion = "2.4.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+}
+
+dependencies {
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 }
 

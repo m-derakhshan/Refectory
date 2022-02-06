@@ -56,6 +56,7 @@ class AuthenticationViewModel @Inject constructor(
             try {
                 when (val result = useCase.loginUseCase(taxCode = _state.value.taxCode)) {
                     is Request.Success -> {
+                        useCase.storeUserDataInDatabase(result.data)
                         _navigate.emit(
                             AuthenticationNavigateState(
                                 navigateToSignUpScreen = !result.data.isUserRegistered(),
@@ -67,8 +68,7 @@ class AuthenticationViewModel @Inject constructor(
                         _snackBar.emit(AuthenticationSnackbarState(result.message))
                     }
                 }
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 _snackBar.emit(AuthenticationSnackbarState(e.message ?: "Unknown error."))
             }
             _state.value = _state.value.copy(

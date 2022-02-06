@@ -1,10 +1,12 @@
 package m.derakhshan.refectory.feature_authentication.data.data_source.dto
 
 import androidx.annotation.Keep
-import m.derakhshan.refectory.core.domain.model.UserModel
+import m.derakhshan.refectory.feature_authentication.domain.model.UserModel
+
 
 @Keep
 data class UserServerModel(
+    val id: String,
     val name: String = "",
     val surname: String = "",
     val photo: String = "",
@@ -18,8 +20,9 @@ fun UserServerModel.toUserModel(): UserModel {
         name = this.name,
         surname = this.surname,
         photo = this.photo,
-        phone = this.phone,
+        phoneNumber = this.phone,
         email = this.email,
-        taxCode = this.taxCode
+        taxCode = this.taxCode,
+        id = this.id
     )
 }

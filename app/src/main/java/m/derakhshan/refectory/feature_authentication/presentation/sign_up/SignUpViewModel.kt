@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import m.derakhshan.refectory.core.domain.model.Request
-import m.derakhshan.refectory.core.domain.model.UserModel
+import m.derakhshan.refectory.feature_authentication.domain.model.UserModel
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.AuthenticationUseCase
 import javax.inject.Inject
 
@@ -82,16 +82,18 @@ class SignUpViewModel @Inject constructor(
             try {
                 val result = useCase.signUpUseCase(
                     UserModel(
+                        id = _state.value.id,
                         name = _state.value.name,
                         surname = _state.value.surname,
                         photo = _state.value.photo.toString(),
-                        phone = _state.value.phoneNumber,
+                        phoneNumber = _state.value.phoneNumber,
                         email = _state.value.email,
                         taxCode = _state.value.taxCode
                     )
                 )
                 when (result) {
                     is Request.Success -> {
+                        useCase.storeUserDataInDatabase(result.data)
                         _navigate.emit(
                             SignUpNavigationState(
                                 navigateToHomeScreen = true
@@ -104,7 +106,7 @@ class SignUpViewModel @Inject constructor(
                         )
                     }
                 }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 _snackBar.emit(
                     SignUpSnackBarState(message = e.message ?: "Unknown error.")
                 )

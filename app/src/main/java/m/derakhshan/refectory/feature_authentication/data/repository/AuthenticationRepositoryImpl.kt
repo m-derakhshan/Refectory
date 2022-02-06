@@ -2,9 +2,10 @@ package m.derakhshan.refectory.feature_authentication.data.repository
 
 import android.accounts.NetworkErrorException
 import m.derakhshan.refectory.core.domain.model.Request
-import m.derakhshan.refectory.core.domain.model.UserModel
 import m.derakhshan.refectory.feature_authentication.data.data_source.AuthenticationAPI
+import m.derakhshan.refectory.feature_authentication.data.data_source.dao.UserDao
 import m.derakhshan.refectory.feature_authentication.data.data_source.dto.toUserModel
+import m.derakhshan.refectory.feature_authentication.domain.model.UserModel
 import m.derakhshan.refectory.feature_authentication.domain.repository.AuthenticationRepository
 import java.net.UnknownHostException
 import java.util.concurrent.TimeoutException
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 
 class AuthenticationRepositoryImpl @Inject constructor(
-    private val api: AuthenticationAPI
+    private val api: AuthenticationAPI,
+    private val userDao: UserDao
 ) : AuthenticationRepository {
 
     override suspend fun login(taxCode: String): Request<UserModel> {
@@ -43,5 +45,9 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 }
             )
         }
+    }
+
+    override suspend fun insertUserInfo(user: UserModel) {
+        userDao.insert(user)
     }
 }

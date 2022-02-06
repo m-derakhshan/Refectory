@@ -1,7 +1,8 @@
 package m.derakhshan.refectory.feature_authentication.data.data_source
 
-import m.derakhshan.refectory.core.domain.model.UserModel
+
 import m.derakhshan.refectory.feature_authentication.data.data_source.dto.UserServerModel
+import m.derakhshan.refectory.feature_authentication.domain.model.UserModel
 import retrofit2.http.Body
 import retrofit2.http.POST
 

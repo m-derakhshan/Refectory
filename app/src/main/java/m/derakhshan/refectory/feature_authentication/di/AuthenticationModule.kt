@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import m.derakhshan.refectory.core.data.data_source.MyDatabase
 import m.derakhshan.refectory.core.domain.utils.Constants
 import m.derakhshan.refectory.feature_authentication.data.data_source.AuthenticationAPI
 import m.derakhshan.refectory.feature_authentication.data.repository.AuthenticationRepositoryImpl
@@ -11,6 +12,7 @@ import m.derakhshan.refectory.feature_authentication.domain.repository.Authentic
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.AuthenticationUseCase
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.LoginUseCase
 import m.derakhshan.refectory.feature_authentication.domain.use_cases.SignUpUseCase
+import m.derakhshan.refectory.feature_authentication.domain.use_cases.StoreUserDataInDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -19,6 +21,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AuthenticationModule {
+
 
     @Singleton
     @Provides
@@ -32,8 +35,11 @@ class AuthenticationModule {
 
     @Singleton
     @Provides
-    fun provideAuthenticationRepository(api: AuthenticationAPI): AuthenticationRepository {
-        return AuthenticationRepositoryImpl(api = api)
+    fun provideAuthenticationRepository(
+        api: AuthenticationAPI,
+        db: MyDatabase
+    ): AuthenticationRepository {
+        return AuthenticationRepositoryImpl(api = api, userDao = db.userDao)
     }
 
 
@@ -42,7 +48,8 @@ class AuthenticationModule {
     fun provideAuthenticationUseCase(repository: AuthenticationRepository): AuthenticationUseCase {
         return AuthenticationUseCase(
             loginUseCase = LoginUseCase(repository = repository),
-            signUpUseCase = SignUpUseCase(repository=repository)
+            signUpUseCase = SignUpUseCase(repository = repository),
+            storeUserDataInDatabase = StoreUserDataInDatabase(repository = repository)
         )
     }
 }
