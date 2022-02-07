@@ -7,8 +7,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +25,7 @@ import coil.transform.CircleCropTransformation
 import kotlinx.coroutines.delay
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.ui.theme.LightBlue
+import m.derakhshan.refectory.ui.theme.Red
 import m.derakhshan.refectory.ui.theme.spacing
 
 @ExperimentalAnimationApi
@@ -30,7 +35,8 @@ fun ProfileCard(
     credit: Float,
     name: String,
     taxCode: String,
-    image: String
+    image: String,
+    setting: () -> Unit
 ) {
     var creditAnimation by remember {
         mutableStateOf(if (credit - 5 > 0) credit - 5 else credit)
@@ -48,25 +54,38 @@ fun ProfileCard(
             .height(250.dp)
             .padding(15.dp)
             .clip(RoundedCornerShape(20.dp))
-            .background(LightBlue)
-            .padding(MaterialTheme.spacing.medium),
+            .background(LightBlue),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Image(
-                painter = rememberImagePainter(
-                    data = image,
-                    builder = {
-                        crossfade(true)
-                        transformations(CircleCropTransformation())
-                    }), contentDescription = "Profile", modifier = Modifier
-                    .size(100.dp)
-                    .border(2.dp, MaterialTheme.colors.onBackground, shape = CircleShape)
-            )
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row {
+                IconButton(onClick = setting) {
+                    Icon(imageVector = Icons.Default.Settings, contentDescription = "setting")
+                }
+
+                Image(
+                    painter = rememberImagePainter(
+                        data = image,
+                        builder = {
+                            crossfade(true)
+                            transformations(CircleCropTransformation())
+                        }), contentDescription = "Profile",
+                    modifier = Modifier
+                        .padding(vertical = MaterialTheme.spacing.small)
+                        .size(100.dp)
+                        .border(2.dp, MaterialTheme.colors.onBackground, shape = CircleShape)
+
+                )
+
+            }
+
+            Row(
+                modifier = Modifier.padding(MaterialTheme.spacing.small),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = stringResource(id = R.string.credit),
                     style = MaterialTheme.typography.h6
@@ -91,12 +110,14 @@ fun ProfileCard(
         Text(
             text = name,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.body1
+            style = MaterialTheme.typography.body1,
+            modifier = Modifier.padding(MaterialTheme.spacing.small)
         )
         Text(
             text = taxCode,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.body1
+            style = MaterialTheme.typography.body1,
+            modifier = Modifier.padding(MaterialTheme.spacing.small)
         )
     }
 }

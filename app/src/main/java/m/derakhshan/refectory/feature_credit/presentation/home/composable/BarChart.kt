@@ -30,7 +30,7 @@ fun BarChart(
     horizontalSpace: Float = 150f,
     chartLineColor: Color = MaterialTheme.colors.onBackground
 ) {
-    // TODO: fix a bug in showing the chart when any of data is zero
+
     Box(modifier = modifier) {
 
         val coefficient = remember {
@@ -54,24 +54,28 @@ fun BarChart(
                     ),
                     size = Size(
                         width = lineWidth,
-                        height = (data[key]!! * scale) - textSize
+                        height = if (data[key]!! * scale > 0) data[key]!! * scale - textSize else 0f
                     )
                 )
+                //--------------------(chart grid horizontal lines)--------------------//
                 drawLine(
                     color = horizontalLineColor,
-                    start = Offset(horizontalSpace * 0.9f, height - scale * data[key]!!),
+                    start = Offset(
+                        horizontalSpace * 0.9f,
+                        if (scale * data[key]!! > 0) height - scale * data[key]!! else 0f
+                    ),
                     end = Offset(
                         space + lineWidth,
-                        height - scale * data[key]!!
+                        if (scale * data[key]!! > 0) height - scale * data[key]!! else 0f
                     ),
                     strokeWidth = horizontalLineWidth
                 )
 
+                //--------------------(chart X labels)--------------------//
                 val paint = Paint()
                 paint.textAlign = Paint.Align.CENTER
                 paint.textSize = textSize
                 paint.color = textColor.toArgb()
-
                 this.drawContext.canvas.nativeCanvas.drawText(
                     key.toString(),
                     space,
@@ -79,6 +83,7 @@ fun BarChart(
                     paint
                 )
 
+                //--------------------(chart Y labels)--------------------//
                 paint.textAlign = Paint.Align.LEFT
                 this.drawContext.canvas.nativeCanvas.drawText(
                     "${data[key]}€",
@@ -88,12 +93,14 @@ fun BarChart(
                 )
                 space += (width - horizontalSpace) / (data.keys.size - 1)
             }
+            //--------------------(chart vertical line)--------------------//
             drawLine(
                 color = chartLineColor,
                 start = Offset(horizontalSpace * 0.9f, -(textSize * 0.5f)),
                 end = Offset(horizontalSpace * 0.9f, height - textSize),
                 strokeWidth = lineWidth * 0.35f
             )
+            //--------------------(chart horizontal line)--------------------//
             drawLine(
                 color = chartLineColor,
                 start = Offset(horizontalSpace * 0.7f, height - textSize),

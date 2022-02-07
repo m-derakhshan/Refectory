@@ -81,7 +81,9 @@ fun HomeScreen(
                             name = state.userName,
                             taxCode = state.userTaxCode,
                             image = state.userImage
-                        )
+                        ){
+                            // TODO: navigate to edit profile page
+                        }
                     else ChartCard(data = state.creditChartData)
                 }
             }
