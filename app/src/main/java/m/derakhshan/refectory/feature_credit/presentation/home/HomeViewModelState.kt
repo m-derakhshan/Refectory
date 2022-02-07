@@ -6,8 +6,9 @@ data class HomeViewModelState(
     val userName: String = "Mohammad Derakhshan Talkhouncheh",
     val userTaxCode: String = "DRKMMM98B24Z274",
     val creditChartData: Map<Any, Float> = mapOf(
-        Pair("02-02", 10f), Pair("03-02", 10f), Pair("04-02", 5f),
-        Pair("05-02", 11f), Pair("06-02", 0f), Pair("07-02", 6f)
+        Pair("02-02", 10f), Pair("03-02", 12f), Pair("04-02", 5f),
+        Pair("05-02", 11f), Pair("06-02", 2f), Pair("07-02", 6f),
+        Pair("08-02", 13f)
     ),
     val cardPosition: Int = 0
 )

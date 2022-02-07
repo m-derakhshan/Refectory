@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import m.derakhshan.refectory.ui.theme.LightBlue
 
@@ -18,6 +19,7 @@ fun ChartCard(
             .fillMaxWidth()
             .height(250.dp)
             .padding(15.dp)
+            .shadow(2.dp, shape = RoundedCornerShape(20.dp))
             .clip(RoundedCornerShape(20.dp))
             .background(LightBlue)
             .padding(25.dp)

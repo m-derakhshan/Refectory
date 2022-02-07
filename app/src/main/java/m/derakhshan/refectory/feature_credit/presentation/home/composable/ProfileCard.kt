@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -52,35 +53,27 @@ fun ProfileCard(
             .fillMaxWidth()
             .height(250.dp)
             .padding(15.dp)
+            .shadow(2.dp, shape = RoundedCornerShape(20.dp))
             .clip(RoundedCornerShape(20.dp))
-            .background(LightBlue),
+            .background(LightBlue)
+            .padding(MaterialTheme.spacing.medium),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row {
-                IconButton(onClick = setting) {
-                    Icon(imageVector = Icons.Default.Settings, contentDescription = "setting")
-                }
-
-                Image(
-                    painter = rememberImagePainter(
-                        data = image,
-                        builder = {
-                            crossfade(true)
-                            transformations(CircleCropTransformation())
-                        }), contentDescription = "Profile",
-                    modifier = Modifier
-                        .padding(vertical = MaterialTheme.spacing.small)
-                        .size(100.dp)
-                        .border(2.dp, MaterialTheme.colors.onBackground, shape = CircleShape)
-
-                )
-
-            }
-
+            Image(
+                painter = rememberImagePainter(
+                    data = image,
+                    builder = {
+                        crossfade(true)
+                        transformations(CircleCropTransformation())
+                    }), contentDescription = "Profile",
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(2.dp, MaterialTheme.colors.onBackground, shape = CircleShape)
+            )
             Row(
                 modifier = Modifier.padding(MaterialTheme.spacing.small),
                 verticalAlignment = Alignment.CenterVertically
@@ -103,20 +96,22 @@ fun ProfileCard(
                 }) { creditAmount ->
                     Text(text = creditAmount.toString(), style = MaterialTheme.typography.body1)
                 }
-
             }
         }
         Text(
             text = name,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(MaterialTheme.spacing.small)
         )
-        Text(
-            text = taxCode,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(MaterialTheme.spacing.small)
-        )
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(
+                text = taxCode,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.body1,
+            )
+            IconButton(onClick = setting) {
+                Icon(imageVector = Icons.Default.Settings, contentDescription = "setting")
+            }
+        }
     }
 }
