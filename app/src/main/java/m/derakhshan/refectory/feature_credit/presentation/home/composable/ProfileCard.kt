@@ -25,7 +25,6 @@ import coil.transform.CircleCropTransformation
 import kotlinx.coroutines.delay
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.ui.theme.LightBlue
-import m.derakhshan.refectory.ui.theme.Red
 import m.derakhshan.refectory.ui.theme.spacing
 
 @ExperimentalAnimationApi
