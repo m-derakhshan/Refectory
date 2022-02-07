@@ -1,9 +1,7 @@
 package m.derakhshan.refectory.feature_authentication.data.data_source.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 import m.derakhshan.refectory.feature_authentication.domain.model.UserModel
 
 
@@ -14,4 +12,7 @@ interface UserDao {
 
     @Delete
     suspend fun delete(user: UserModel)
+
+    @Query("SELECT * FROM USER LIMIT 1")
+    suspend fun userInfo(): UserModel
 }

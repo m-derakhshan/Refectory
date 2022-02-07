@@ -17,10 +17,12 @@ data class UserModel(
     val taxCode: String,
 
     @SerializedName("phone_number")
-    val phoneNumber: String? = null,
+    val phoneNumber: String = "",
 
-    val email: String? = null,
-    val photo: String? = null
+    val email: String = "",
+    val photo: String = "",
+
+    val credit: Float = 0f
 ) {
     fun isUserRegistered() = name.isNotBlank() && surname.isNotBlank()
 }
