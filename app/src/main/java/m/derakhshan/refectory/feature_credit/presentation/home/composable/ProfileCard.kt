@@ -1,6 +1,5 @@
 package m.derakhshan.refectory.feature_credit.presentation.home.composable
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,7 +13,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,7 +23,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
-import kotlinx.coroutines.delay
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.ui.theme.LightBlue
 import m.derakhshan.refectory.ui.theme.spacing
@@ -39,23 +37,6 @@ fun ProfileCard(
     image: String,
     setting: () -> Unit
 ) {
-    var creditAnimation by remember {
-        mutableStateOf(
-            if (credit - 5 > 0)
-                (credit - 5f)
-            else
-                credit
-        )
-    }
-
-    // TODO: bug in showing the correct credit
-
-    LaunchedEffect(credit, block = {
-        while (creditAnimation < credit) {
-            delay(100)
-            creditAnimation +=1f
-        }
-    })
 
     Column(
         modifier = modifier
@@ -92,18 +73,22 @@ fun ProfileCard(
                     style = MaterialTheme.typography.h6
                 )
                 Spacer(modifier = Modifier.padding(MaterialTheme.spacing.extraSmall))
-                AnimatedContent(targetState = creditAnimation, transitionSpec = {
-                    if (targetState > initialState) {
-                        slideInVertically { height -> height } + fadeIn() with
-                                slideOutVertically { height -> -height } + fadeOut()
-                    } else {
-                        slideInVertically { height -> -height } + fadeIn() with
-                                slideOutVertically { height -> height } + fadeOut()
-                    }.using(
-                        SizeTransform(clip = false)
+                AnimatedContent(targetState = credit,
+                    transitionSpec = {
+                        if (targetState > initialState) {
+                            slideInVertically { height -> height } + fadeIn() with
+                                    slideOutVertically { height -> -height } + fadeOut()
+                        } else {
+                            slideInVertically { height -> -height } + fadeIn() with
+                                    slideOutVertically { height -> height } + fadeOut()
+                        }.using(
+                            SizeTransform(clip = false)
+                        )
+                    }) {
+                    Text(
+                        text = credit.toString(),
+                        style = MaterialTheme.typography.body1
                     )
-                }) { creditAmount ->
-                    Text(text = creditAmount.toString(), style = MaterialTheme.typography.body1)
                 }
             }
         }

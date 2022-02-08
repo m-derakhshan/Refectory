@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import m.derakhshan.refectory.feature_credit.domain.model.getDetailAsMap
@@ -34,8 +35,16 @@ class HomeViewModel @Inject constructor(
             useCase.getUserCreditUseCase().collect { creditModel ->
                 _state.value = _state.value.copy(
                     creditChartData = creditModel.getDetailAsMap(),
-                    userCredit = creditModel.totalCredit
                 )
+                var tempCredit = creditModel.totalCredit
+                if (tempCredit > 5) {
+                    tempCredit -= 5
+                    for (i in 1..6) {
+                        _state.value = _state.value.copy(userCredit = tempCredit)
+                        tempCredit += 1
+                        delay(100)
+                    }
+                }
             }
         }
     }
