@@ -1,5 +1,6 @@
 package m.derakhshan.refectory.feature_credit.presentation.home.composable
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,12 +40,20 @@ fun ProfileCard(
     setting: () -> Unit
 ) {
     var creditAnimation by remember {
-        mutableStateOf(if (credit - 5 > 0) credit - 5 else credit)
+        mutableStateOf(
+            if (credit - 5 > 0)
+                (credit - 5f)
+            else
+                credit
+        )
     }
-    LaunchedEffect(true, block = {
+
+    // TODO: bug in showing the correct credit
+
+    LaunchedEffect(credit, block = {
         while (creditAnimation < credit) {
             delay(100)
-            creditAnimation += 1
+            creditAnimation +=1f
         }
     })
 

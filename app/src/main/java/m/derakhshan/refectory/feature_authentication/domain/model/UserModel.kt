@@ -20,9 +20,7 @@ data class UserModel(
     val phoneNumber: String = "",
 
     val email: String = "",
-    val photo: String = "",
-
-    val credit: Float = 0f
+    val photo: String = ""
 ) {
     fun isUserRegistered() = name.isNotBlank() && surname.isNotBlank()
 }

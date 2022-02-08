@@ -1,7 +1,6 @@
 package m.derakhshan.refectory.feature_authentication.data.data_source.dao
 
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 import m.derakhshan.refectory.feature_authentication.domain.model.UserModel
 
 

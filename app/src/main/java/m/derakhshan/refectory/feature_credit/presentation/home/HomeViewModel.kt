@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import m.derakhshan.refectory.feature_credit.domain.model.getDetailAsMap
 import m.derakhshan.refectory.feature_credit.domain.use_cases.CreditUseCase
 import javax.inject.Inject
 
@@ -22,13 +24,20 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val userInfo = useCase.getUserProfileUseCase()
             _state.value = _state.value.copy(
-                userCredit =userInfo.credit,
                 userImage = userInfo.photo,
                 userName = userInfo.name,
                 userTaxCode = userInfo.taxCode,
             )
+            //--------------------(update credit from server)--------------------//
+            useCase.updateCreditsUseCase()
+            //--------------------(show user credit in chart)--------------------//
+            useCase.getUserCreditUseCase().collect { creditModel ->
+                _state.value = _state.value.copy(
+                    creditChartData = creditModel.getDetailAsMap(),
+                    userCredit = creditModel.totalCredit
+                )
+            }
         }
-
     }
 
     fun onEvent(event: HomeViewModelEvent) {

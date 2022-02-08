@@ -12,8 +12,7 @@ data class UserServerModel(
     val photo: String = "",
     val phone: String = "",
     val email: String = "",
-    val taxCode: String = "",
-    val credit: Float = 0f
+    val taxCode: String = ""
 )
 
 fun UserServerModel.toUserModel(): UserModel {
@@ -24,7 +23,6 @@ fun UserServerModel.toUserModel(): UserModel {
         phoneNumber = this.phone,
         email = this.email,
         taxCode = this.taxCode,
-        id = this.id,
-        credit = this.credit
+        id = this.id
     )
 }

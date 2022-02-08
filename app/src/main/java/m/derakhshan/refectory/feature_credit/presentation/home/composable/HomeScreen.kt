@@ -10,7 +10,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
@@ -42,9 +44,7 @@ fun HomeScreen(
     val scaffoldState = rememberScaffoldState()
     val state = viewModel.state.value
     val pagerState = rememberPagerState()
-    var offset by remember {
-        mutableStateOf(200f)
-    }
+
 
     LaunchedEffect(pagerState, block = {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
