@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
@@ -17,6 +18,8 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.core.data.data_source.Setting
+import m.derakhshan.refectory.core.domain.utils.TestingConstant.AUTHENTICATION_SCREEN_LOGIN_BUTTON
+import m.derakhshan.refectory.core.domain.utils.TestingConstant.AUTHENTICATION_SCREEN_TAX_INPUT
 import m.derakhshan.refectory.core.presentation.LoadingButton
 import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
 import m.derakhshan.refectory.feature_authentication.presentation.authentication.AuthenticationEvent
@@ -106,6 +109,7 @@ fun AuthenticationScreen(
                             vertical = MaterialTheme.spacing.small,
                             horizontal = MaterialTheme.spacing.medium
                         )
+                        .testTag(AUTHENTICATION_SCREEN_TAX_INPUT)
                 )
                 LoadingButton(
                     buttonText = stringResource(id = R.string.login),
@@ -113,6 +117,7 @@ fun AuthenticationScreen(
                     modifier = Modifier
                         .padding(MaterialTheme.spacing.medium)
                         .align(Alignment.CenterHorizontally)
+                        .testTag(AUTHENTICATION_SCREEN_LOGIN_BUTTON)
                 ) {
                     viewModel.onEvent(AuthenticationEvent.Login)
                 }
