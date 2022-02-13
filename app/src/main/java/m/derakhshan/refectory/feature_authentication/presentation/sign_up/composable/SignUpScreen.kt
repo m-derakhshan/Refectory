@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -29,6 +30,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.core.data.data_source.Setting
+import m.derakhshan.refectory.core.domain.utils.TestingConstant
 import m.derakhshan.refectory.core.presentation.BackSwipeGesture
 import m.derakhshan.refectory.core.presentation.LoadingButton
 import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
@@ -130,7 +132,8 @@ fun SignUpScreen(
                         horizontal = MaterialTheme.spacing.medium,
                         vertical = MaterialTheme.spacing.small
                     )
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(TestingConstant.SIGNUP_SCREEN_TAX_CODE_EDIT_TEXT),
                 enabled = false
             )
             OutlinedTextField(
@@ -144,7 +147,8 @@ fun SignUpScreen(
                         horizontal = MaterialTheme.spacing.medium,
                         vertical = MaterialTheme.spacing.small
                     )
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(TestingConstant.SIGNUP_SCREEN_NAME_EDIT_TEXT),
                 maxLines = 1
             )
             OutlinedTextField(
@@ -158,7 +162,8 @@ fun SignUpScreen(
                         horizontal = MaterialTheme.spacing.medium,
                         vertical = MaterialTheme.spacing.small
                     )
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(TestingConstant.SIGNUP_SCREEN_SURNAME_EDIT_TEXT),
                 maxLines = 1
             )
             OutlinedTextField(
@@ -172,7 +177,8 @@ fun SignUpScreen(
                         horizontal = MaterialTheme.spacing.medium,
                         vertical = MaterialTheme.spacing.small
                     )
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(TestingConstant.SIGNUP_SCREEN_PHONE_EDIT_TEXT),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 maxLines = 1
             )
@@ -187,7 +193,8 @@ fun SignUpScreen(
                         horizontal = MaterialTheme.spacing.medium,
                         vertical = MaterialTheme.spacing.small
                     )
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(TestingConstant.SIGNUP_SCREEN_EMAIL_EDIT_TEXT),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 maxLines = 1
             )
@@ -197,6 +204,7 @@ fun SignUpScreen(
                 modifier = Modifier
                     .padding(MaterialTheme.spacing.medium)
                     .align(Alignment.CenterHorizontally)
+                    .testTag(TestingConstant.SIGNUP_SCREEN_SIGNUP_BUTTON)
             ) {
                 viewModel.onEvent(SignUpEvent.SignUp)
             }
