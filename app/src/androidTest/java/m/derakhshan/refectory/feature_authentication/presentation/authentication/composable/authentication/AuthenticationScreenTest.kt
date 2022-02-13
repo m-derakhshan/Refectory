@@ -128,7 +128,7 @@ class AuthenticationScreenTest {
         for ((key,value) in taxCode.fetchSemanticsNode().config)
             if (key.name =="EditableText")
                 assertEquals("ABCDEFGHIJKLMNOP",value.toString())
-        
+
     }
 
     @Test
