@@ -1,8 +1,10 @@
 package m.derakhshan.refectory.feature_authentication.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import m.derakhshan.refectory.core.data.data_source.MyDatabase
 import m.derakhshan.refectory.core.domain.utils.Constants
@@ -45,10 +47,13 @@ class AuthenticationModule {
 
     @Singleton
     @Provides
-    fun provideAuthenticationUseCase(repository: AuthenticationRepository): AuthenticationUseCase {
+    fun provideAuthenticationUseCase(
+        repository: AuthenticationRepository,
+        @ApplicationContext context: Context
+    ): AuthenticationUseCase {
         return AuthenticationUseCase(
             loginUseCase = LoginUseCase(repository = repository),
-            signUpUseCase = SignUpUseCase(repository = repository),
+            signUpUseCase = SignUpUseCase(repository = repository, context = context),
             storeUserDataInDatabase = StoreUserDataInDatabase(repository = repository)
         )
     }

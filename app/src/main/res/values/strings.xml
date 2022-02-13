@@ -17,4 +17,6 @@
     <string name="credit">Credit:</string>
     <string name="restaurants">Restaurants</string>
 
+    <string name="sign_up_error_empty_name">Name can\'t left blank</string>
+    <string name="sign_up_error_empty_surname">Surname can\'t left blank</string>
 </resources>

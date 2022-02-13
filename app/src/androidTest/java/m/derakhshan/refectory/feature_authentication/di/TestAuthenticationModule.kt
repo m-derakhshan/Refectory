@@ -63,10 +63,13 @@ object AndroidTestAuthenticationModule {
 
     @Singleton
     @Provides
-    fun provideAuthenticationUseCase(repository: AuthenticationRepository): AuthenticationUseCase {
+    fun provideAuthenticationUseCase(
+        repository: AuthenticationRepository,
+        @ApplicationContext context: Context
+    ): AuthenticationUseCase {
         return AuthenticationUseCase(
             loginUseCase = LoginUseCase(repository = repository),
-            signUpUseCase = SignUpUseCase(repository = repository),
+            signUpUseCase = SignUpUseCase(repository = repository, context = context),
             storeUserDataInDatabase = StoreUserDataInDatabase(repository = repository)
         )
     }
