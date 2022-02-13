@@ -41,9 +41,7 @@ class FakeAuthenticationAPI : AuthenticationAPI {
                         is NetworkErrorType.Other -> Exception("Unknown error.")
                     })
         }
-        return fakeUserResponse.copy(
-            taxCode = taxCode
-        )
+        return fakeUserResponse.copy(taxCode = taxCode)
     }
 
     override suspend fun signUp(user: UserModel): UserServerModel {

@@ -18,8 +18,8 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.core.data.data_source.Setting
+import m.derakhshan.refectory.core.domain.utils.TestingConstant
 import m.derakhshan.refectory.core.domain.utils.TestingConstant.AUTHENTICATION_SCREEN_LOGIN_BUTTON
-import m.derakhshan.refectory.core.domain.utils.TestingConstant.AUTHENTICATION_SCREEN_TAX_INPUT
 import m.derakhshan.refectory.core.presentation.LoadingButton
 import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
 import m.derakhshan.refectory.feature_authentication.presentation.authentication.AuthenticationEvent
@@ -77,11 +77,12 @@ fun AuthenticationScreen(
         ) {
 
             Column {
-                LottieBanner(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(250.dp)
-                )
+//                LottieBanner(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .height(250.dp)
+//
+//                )
                 Text(
                     text = stringResource(id = R.string.welcome),
                     style = MaterialTheme.typography.h3,
@@ -109,7 +110,7 @@ fun AuthenticationScreen(
                             vertical = MaterialTheme.spacing.small,
                             horizontal = MaterialTheme.spacing.medium
                         )
-                        .testTag(AUTHENTICATION_SCREEN_TAX_INPUT)
+                        .testTag(TestingConstant.AUTHENTICATION_SCREEN_TAX_CODE_EDIT_TEXT)
                 )
                 LoadingButton(
                     buttonText = stringResource(id = R.string.login),

@@ -68,7 +68,7 @@ object AndroidTestAuthenticationModule {
         @ApplicationContext context: Context
     ): AuthenticationUseCase {
         return AuthenticationUseCase(
-            loginUseCase = LoginUseCase(repository = repository),
+            loginUseCase = LoginUseCase(repository = repository, context = context),
             signUpUseCase = SignUpUseCase(repository = repository, context = context),
             storeUserDataInDatabase = StoreUserDataInDatabase(repository = repository)
         )

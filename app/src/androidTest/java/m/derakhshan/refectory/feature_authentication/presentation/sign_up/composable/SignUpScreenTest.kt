@@ -46,7 +46,6 @@ class SignUpScreenTest {
     @get:Rule(order = 1)
     val composeRule = createAndroidComposeRule<MainActivity>()
 
-
     @Before
     fun setup() {
         hiltRule.inject()
@@ -89,7 +88,6 @@ class SignUpScreenTest {
         node.assertIsDisplayed()
         node.assertIsEnabled()
     }
-
 
     @Test
     fun surnameIsShown_Pass() {
@@ -143,7 +141,6 @@ class SignUpScreenTest {
         composeRule.onNodeWithText(context.getString(R.string.sign_up_error_empty_surname))
             .assertIsDisplayed()
     }
-
 
     @Test
     fun navigateToHomeScreenIfSignUpWasSuccessful() {

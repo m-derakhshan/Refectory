@@ -1,7 +1,6 @@
 package m.derakhshan.refectory.feature_authentication.domain.use_cases
 
 import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.core.domain.model.Request
 import m.derakhshan.refectory.feature_authentication.domain.model.InvalidUserDataException
