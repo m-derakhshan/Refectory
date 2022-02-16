@@ -40,7 +40,7 @@ import m.derakhshan.refectory.feature_credit.presentation.HomeNavGraph
 import m.derakhshan.refectory.ui.theme.fancyFont
 import m.derakhshan.refectory.ui.theme.spacing
 
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel = hiltViewModel(),

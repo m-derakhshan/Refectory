@@ -11,6 +11,6 @@ interface CreditRepository {
 
     suspend fun updateUserCredit()
 
-    fun getUserCredit(): Flow<CreditModel>
+    fun getUserCredit(): Flow<CreditModel?>
 
 }

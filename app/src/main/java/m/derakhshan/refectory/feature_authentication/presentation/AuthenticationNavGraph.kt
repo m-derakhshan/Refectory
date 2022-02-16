@@ -1,6 +1,5 @@
 package m.derakhshan.refectory.feature_authentication.presentation
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import m.derakhshan.refectory.core.data.data_source.Setting
@@ -8,7 +7,6 @@ import m.derakhshan.refectory.feature_authentication.presentation.authentication
 import m.derakhshan.refectory.feature_authentication.presentation.sign_up.composable.SignUpScreen
 
 
-@ExperimentalMaterialApi
 fun NavGraphBuilder.authenticationNavigation(
     navController: NavController,
     setting: Setting

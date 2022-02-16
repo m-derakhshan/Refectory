@@ -1,32 +1,26 @@
 package m.derakhshan.refectory
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 import m.derakhshan.refectory.core.data.data_source.Setting
 import m.derakhshan.refectory.feature_authentication.presentation.AuthenticationNavGraph
 import m.derakhshan.refectory.feature_authentication.presentation.authenticationNavigation
 import m.derakhshan.refectory.feature_credit.presentation.HomeNavGraph
 import m.derakhshan.refectory.feature_credit.presentation.homeNavigation
-
-
 import m.derakhshan.refectory.ui.theme.RefectoryTheme
 import javax.inject.Inject
 
-@ExperimentalMaterialApi
-@ExperimentalPagerApi
+
 @AndroidEntryPoint
-@ExperimentalAnimationApi
 class MainActivity : ComponentActivity() {
 
     @Inject

@@ -18,6 +18,6 @@ interface CreditDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM Credit LIMIT 1")
-    fun getCredit(): Flow<CreditModel>
+    fun getCredit(): Flow<CreditModel?>
 
 }

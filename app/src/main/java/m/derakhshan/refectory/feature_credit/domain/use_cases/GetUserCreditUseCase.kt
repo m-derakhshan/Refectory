@@ -9,7 +9,7 @@ class GetUserCreditUseCase @Inject constructor(
     private val repository: CreditRepository
 ) {
 
-    operator fun invoke(): Flow<CreditModel> {
+    operator fun invoke(): Flow<CreditModel?> {
         return repository.getUserCredit()
     }
 

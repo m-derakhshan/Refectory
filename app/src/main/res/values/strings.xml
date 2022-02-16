@@ -16,6 +16,8 @@
 
     <string name="credit">Credit:</string>
     <string name="restaurants">Restaurants</string>
+    <string name="profile">Profile</string>
+    <string name="weekly_report">Weekly Report</string>
 
     <string name="login_error_empty_tax_code">Tax Code can\'t left blank.</string>
     <string name="login_error_wrong_tax_code_length">Length of Tax Code is not correct.</string>

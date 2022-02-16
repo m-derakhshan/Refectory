@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
@@ -76,12 +77,13 @@ fun AuthenticationScreen(
         ) {
 
             Column {
-//                LottieBanner(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(250.dp)
-//
-//                )
+                // TODO: uncomment this section after testing
+                LottieBanner(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp)
+
+                )
                 Text(
                     text = stringResource(id = R.string.welcome),
                     style = MaterialTheme.typography.h3,

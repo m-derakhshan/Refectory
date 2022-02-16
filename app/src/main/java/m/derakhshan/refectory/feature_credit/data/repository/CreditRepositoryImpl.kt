@@ -32,7 +32,7 @@ class CreditRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getUserCredit(): Flow<CreditModel> {
+    override fun getUserCredit(): Flow<CreditModel?> {
         return userCredit.getCredit()
     }
 }

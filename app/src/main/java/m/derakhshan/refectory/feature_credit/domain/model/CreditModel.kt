@@ -1,5 +1,6 @@
 package m.derakhshan.refectory.feature_credit.domain.model
 
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
