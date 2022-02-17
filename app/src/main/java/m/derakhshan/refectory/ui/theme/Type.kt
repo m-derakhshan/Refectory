@@ -23,6 +23,11 @@ val Typography = Typography(
     body1 = TextStyle(
         fontFamily = attractiveFont,
         fontWeight = FontWeight.Normal,
+        fontSize = 18.sp
+    ),
+    body2 = TextStyle(
+        fontFamily = attractiveFont,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
     button = TextStyle(

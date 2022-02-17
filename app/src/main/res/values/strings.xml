@@ -14,7 +14,9 @@
     <string name="phone">Phone Number</string>
     <string name="email">Email</string>
 
-    <string name="credit">Credit:</string>
+    <string name="total_credit">Total Credit:</string>
+    <string name="most_credit_at">Most Credit At:</string>
+
     <string name="restaurants">Restaurants</string>
     <string name="profile">Profile</string>
     <string name="weekly_report">Weekly Report</string>
