@@ -9,13 +9,16 @@ data class CreditServerModel(
     val userID: String,
     val details: List<Detail>,
     @SerializedName("total_credit")
-    val totalCredit: Float
+    val totalCredit: Float,
+    @SerializedName("most_credit_at")
+    val mostCreditAt: String,
 )
 
 fun CreditServerModel.toCreditModel(): CreditModel {
     return CreditModel(
         userID = this.userID,
         details = this.details,
-        totalCredit = this.totalCredit
+        totalCredit = this.totalCredit,
+        mostCreditAt = this.mostCreditAt
     )
 }

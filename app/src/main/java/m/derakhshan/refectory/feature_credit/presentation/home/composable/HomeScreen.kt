@@ -21,9 +21,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -31,6 +28,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.feature_credit.presentation.home.HomeViewModel
 import m.derakhshan.refectory.ui.theme.*
+
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
 @Composable
@@ -81,7 +79,7 @@ fun HomeScreen(
                         .align(Alignment.CenterHorizontally)
                 ) {
                     Text(
-                        text = "Mohammad Derakhshan Talkhouncheh",
+                        text = state.userName,
                         style = MaterialTheme.typography.body1,
                         color = MaterialTheme.colors.onBackground,
                         textAlign = TextAlign.Center,
@@ -95,7 +93,6 @@ fun HomeScreen(
                     barWidth = 60f
                 )
             }
-
             Row(
                 modifier = Modifier
                     .padding(20.dp)
@@ -112,29 +109,29 @@ fun HomeScreen(
                             shape = RoundedCornerShape(10.dp)
                         )
                         .padding(10.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
                         text = stringResource(id = R.string.total_credit),
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Start,
                         color = MaterialTheme.colors.onSecondary,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.caption,
                         modifier = Modifier.fillMaxWidth()
                     )
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = state.totalCredit,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colors.onSecondary,
+                            style = MaterialTheme.typography.body1,
+                        )
+                    }
 
-                    Text(
-                        text = "120E",
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.onSecondary,
-                        style = MaterialTheme.typography.body1,
-                        modifier = Modifier
-                            .padding(20.dp)
-                            .fillMaxWidth()
-
-                    )
 
                 }
-
 
                 Column(
                     modifier = Modifier
@@ -150,28 +147,28 @@ fun HomeScreen(
                 ) {
                     Text(
                         text = stringResource(id = R.string.most_credit_at),
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Start,
                         color = MaterialTheme.colors.onSurface,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.caption,
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    Text(
-                        text = "Jamm Restaurant and Bar",
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.onSurface,
-                        style = MaterialTheme.typography.body1,
-                        modifier = Modifier
-                            .padding(20.dp)
-                            .fillMaxWidth()
-
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = state.mostCreditAt,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colors.onSurface,
+                            style = MaterialTheme.typography.body1,
+                        )
+                    }
 
                 }
 
-
             }
-
 
         }
     }

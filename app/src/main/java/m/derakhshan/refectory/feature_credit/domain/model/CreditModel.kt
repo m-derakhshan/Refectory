@@ -14,6 +14,7 @@ data class CreditModel(
     val userID: String,
     val details: List<Detail>,
     val totalCredit: Float,
+    val mostCreditAt: String
 )
 
 fun CreditModel.getDetailAsMap(): Map<Any, Float> {

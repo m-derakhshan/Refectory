@@ -4,6 +4,9 @@ import android.content.Context
 import android.graphics.Paint
 import android.graphics.Typeface
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -36,6 +39,8 @@ fun Chart(
     if (data.isNullOrEmpty())
         return
 
+    val scaleAnimation = remember { Animatable(0F) }
+
     var screenSize by remember {
         mutableStateOf(Size.Zero)
     }
@@ -46,6 +51,13 @@ fun Chart(
     }
     var chosenBarKey by remember {
         mutableStateOf("")
+    }
+
+    LaunchedEffect(scaleAnimation) {
+        scaleAnimation.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(1500, easing = FastOutSlowInEasing)
+        )
     }
 
     Box(
@@ -87,12 +99,12 @@ fun Chart(
                 val spaceBetweenBars =
                     (size.width - (data.size * barWidth)) / (data.size - 1)
                 val maxBarHeight = data.values.maxOf { it }
-                val barScale = size.height / maxBarHeight
+                val barScale = size.height / maxBarHeight * (scaleAnimation.value)
                 val paint = Paint().apply {
                     this.color = labelColor.toArgb()
                     textAlign = Paint.Align.CENTER
                     textSize = 40f
-                    this.typeface = Typeface.createFromAsset(context.assets,"attractive.ttf")
+                    this.typeface = Typeface.createFromAsset(context.assets, "attractive.ttf")
 
                 }
 

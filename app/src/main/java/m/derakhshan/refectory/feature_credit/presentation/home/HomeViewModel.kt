@@ -1,7 +1,6 @@
 package m.derakhshan.refectory.feature_credit.presentation.home
 
 
-
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -26,9 +25,11 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             //--------------------(show user credit in chart)--------------------//
             useCase.getUserCreditUseCase().collectLatest {
-                it?.let {  creditModel ->
+                it?.let { creditModel ->
                     _state.value = _state.value.copy(
                         creditChartData = creditModel.getDetailAsMap(),
+                        totalCredit = "${creditModel.totalCredit}€",
+                        mostCreditAt = creditModel.mostCreditAt
                     )
                 }
             }
@@ -38,8 +39,7 @@ class HomeViewModel @Inject constructor(
             val userInfo = useCase.getUserProfileUseCase()
             _state.value = _state.value.copy(
                 userImage = userInfo.photo,
-                userName = userInfo.name,
-                userTaxCode = userInfo.taxCode,
+                userName = "${userInfo.name} ${userInfo.surname}",
             )
             //--------------------(update credit from server)--------------------//
             useCase.updateCreditsUseCase()
@@ -50,10 +50,8 @@ class HomeViewModel @Inject constructor(
 
     fun onEvent(event: HomeViewModelEvent) {
         when (event) {
-            is HomeViewModelEvent.CardPositionChanged -> {
-                _state.value = _state.value.copy(
-                    cardPosition = event.position
-                )
+            is HomeViewModelEvent.OnProfileClick -> {
+
             }
         }
     }
