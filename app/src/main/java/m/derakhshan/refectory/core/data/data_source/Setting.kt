@@ -18,4 +18,11 @@ class Setting @Inject constructor(
         }
         get() = share.getBoolean("isUserLoggedIn", false)
 
+    var lastCredit: Float
+        set(value) {
+            edit.putFloat("lastCredit", value)
+            edit.apply()
+        }
+        get() = share.getFloat("lastCredit", 0f)
+
 }

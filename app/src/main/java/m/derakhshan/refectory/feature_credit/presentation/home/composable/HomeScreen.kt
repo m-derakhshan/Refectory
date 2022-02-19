@@ -1,7 +1,7 @@
 package m.derakhshan.refectory.feature_credit.presentation.home.composable
 
 
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,7 +27,9 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.feature_credit.presentation.home.HomeViewModel
-import m.derakhshan.refectory.ui.theme.*
+import m.derakhshan.refectory.ui.theme.DarkBlue
+import m.derakhshan.refectory.ui.theme.VeryLightGrayBlue
+import m.derakhshan.refectory.ui.theme.spacing
 
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
@@ -122,12 +124,27 @@ fun HomeScreen(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(
-                            text = state.totalCredit,
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colors.onSecondary,
-                            style = MaterialTheme.typography.body1,
-                        )
+                        AnimatedContent(
+                            targetState = state.totalCredit,
+                            transitionSpec = {
+                                if (targetState > initialState) {
+                                    slideInVertically { height -> height } + fadeIn() with
+                                            slideOutVertically { height -> -height } + fadeOut()
+                                } else {
+                                    slideInVertically { height -> -height } + fadeIn() with
+                                            slideOutVertically { height -> height } + fadeOut()
+                                }.using(
+                                    SizeTransform(clip = false)
+                                )
+                            }
+                        ) { targetCount ->
+                            Text(
+                                text = targetCount,
+                                textAlign = TextAlign.Center,
+                                color = MaterialTheme.colors.onSecondary,
+                                style = MaterialTheme.typography.body1,
+                            )
+                        }
                     }
 
 
