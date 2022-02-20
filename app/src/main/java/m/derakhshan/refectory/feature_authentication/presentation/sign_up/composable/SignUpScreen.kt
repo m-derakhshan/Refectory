@@ -13,7 +13,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Camera
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,17 +57,15 @@ fun SignUpScreen(
         mutableStateOf(0f)
     }
 
-    LaunchedEffect(key1 = true, block = {
+    LaunchedEffect(true) {
         viewModel.snackBar.collectLatest { snackBar ->
             scaffoldState.snackbarHostState.showSnackbar(
                 message = snackBar.message
             )
-
         }
+    }
 
-    })
-
-    LaunchedEffect(key1 = true, block = {
+    LaunchedEffect(true) {
         viewModel.navigate.collectLatest { navigate ->
             if (navigate.navigateToHomeScreen)
                 navController.navigate(HomeNavGraph.Route.route) {
@@ -76,8 +76,7 @@ fun SignUpScreen(
                     setting.isUserLoggedIn = true
                 }
         }
-    })
-
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -108,19 +107,39 @@ fun SignUpScreen(
             )
             Box(
                 modifier = Modifier
-                    .size(150.dp)
-                    .shadow(5.dp, CircleShape)
-                    .background(MaterialTheme.colors.secondary)
-                    .clip(CircleShape)
                     .align(Alignment.CenterHorizontally)
-                    .padding(MaterialTheme.spacing.extraSmall)
             ) {
-                Image(
-                    painter = painterResource(id = R.mipmap.default_avatar),
-                    contentDescription = "default avatar",
-                    modifier = Modifier.fillMaxSize()
-                )
+                Box(
+                    modifier = Modifier
+                        .size(130.dp)
+                        .shadow(5.dp, CircleShape)
+                        .background(MaterialTheme.colors.secondary)
+                        .clip(CircleShape)
+                        .padding(MaterialTheme.spacing.extraSmall),
+                ) {
+                    Image(
+                        painter = painterResource(id = R.mipmap.default_avatar),
+                        contentDescription = "default avatar",
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                IconButton(
+                    onClick = { viewModel.onEvent(SignUpEvent.AddImageClicked) },
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .background(
+                            MaterialTheme.colors.secondary,
+                            shape = CircleShape
+                        )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.AddAPhoto,
+                        contentDescription = "add image",
+                        tint = MaterialTheme.colors.onSecondary
+                    )
+                }
             }
+
             OutlinedTextField(
                 value = state.taxCode,
                 onValueChange = {},
@@ -217,5 +236,4 @@ fun SignUpScreen(
         }
         BackSwipeGesture(offset = offset)
     }
-
 }

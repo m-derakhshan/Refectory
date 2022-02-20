@@ -36,19 +36,13 @@ fun Chart(
     labelColor: Color = Color.Black,
     context: Context = LocalContext.current
 ) {
-    // TODO: change the long press for showing bar value to normal press
+
     if (data.isNullOrEmpty())
         return
 
     val scaleAnimation = remember { Animatable(0F) }
-
-    var screenSize by remember {
-        mutableStateOf(Size.Zero)
-    }
-
-    var chosenBarKey by remember {
-        mutableStateOf("")
-    }
+    var screenSize by remember { mutableStateOf(Size.Zero) }
+    var chosenBarKey by remember { mutableStateOf("") }
 
     LaunchedEffect(scaleAnimation) {
         scaleAnimation.animateTo(
@@ -60,7 +54,6 @@ fun Chart(
     Box(
         modifier = modifier
     ) {
-
         Canvas(modifier = Modifier
             .fillMaxSize()
             .padding(

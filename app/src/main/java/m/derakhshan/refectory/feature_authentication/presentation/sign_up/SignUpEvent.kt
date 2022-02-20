@@ -8,5 +8,6 @@ sealed class SignUpEvent {
     data class PhoneChanged(val phone: String) : SignUpEvent()
     data class EmailChanged(val email: String) : SignUpEvent()
     data class PhotoChanged(val photo: Uri) : SignUpEvent()
+    object AddImageClicked : SignUpEvent()
     object SignUp : SignUpEvent()
 }
