@@ -36,6 +36,7 @@ fun Chart(
     labelColor: Color = Color.Black,
     context: Context = LocalContext.current
 ) {
+    // TODO: change the long press for showing bar value to normal press
     if (data.isNullOrEmpty())
         return
 
@@ -45,10 +46,6 @@ fun Chart(
         mutableStateOf(Size.Zero)
     }
 
-
-    var chosenBar by remember {
-        mutableStateOf(-1)
-    }
     var chosenBarKey by remember {
         mutableStateOf("")
     }
@@ -76,20 +73,18 @@ fun Chart(
                 this.detectTapGestures(
                     onPress = {
                         try {
-                            awaitRelease()
-                        } finally {
-                            chosenBarKey = ""
-                        }
-                    },
-                    onLongPress = {
-                        chosenBar = detectPosition(
+                        detectPosition(
                             screenSize = screenSize,
                             offset = it,
                             listSize = data.size,
                             itemWidth = barWidth
-                        )
-                        if (chosenBar >= 0) {
-                            chosenBarKey = data.toList()[chosenBar].first.toString()
+                        ).let { chosenItem ->
+                            if (chosenItem >= 0)
+                                chosenBarKey = data.toList()[chosenItem].first.toString()
+                        }
+                            awaitRelease()
+                        } finally {
+                            chosenBarKey = ""
                         }
                     }
                 )
