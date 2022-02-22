@@ -10,7 +10,8 @@ data class SignUpState(
     val phoneNumber: String = "",
     val email: String = "",
     val photo: Uri? = null,
-    val isSignUpExpanded: Boolean = true
+    val isSignUpExpanded: Boolean = true,
+    val openImagePicker: Boolean = false
 )
 
 

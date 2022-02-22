@@ -39,6 +39,7 @@ class SignUpViewModel @Inject constructor(
 
     fun onEvent(event: SignUpEvent) {
         when (event) {
+
             is SignUpEvent.SignUp -> {
                 signUp()
             }
@@ -65,6 +66,17 @@ class SignUpViewModel @Inject constructor(
             is SignUpEvent.PhotoChanged -> {
                 _state.value = _state.value.copy(
                     photo = event.photo
+                )
+            }
+            is SignUpEvent.AddImageClicked -> {
+                _state.value = _state.value.copy(
+                    openImagePicker = true
+                )
+            }
+
+            is SignUpEvent.CloseImagePicker -> {
+                _state.value = _state.value.copy(
+                    openImagePicker = false
                 )
             }
         }

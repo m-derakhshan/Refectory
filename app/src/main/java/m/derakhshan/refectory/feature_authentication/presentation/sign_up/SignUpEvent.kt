@@ -9,5 +9,6 @@ sealed class SignUpEvent {
     data class EmailChanged(val email: String) : SignUpEvent()
     data class PhotoChanged(val photo: Uri) : SignUpEvent()
     object AddImageClicked : SignUpEvent()
+    object CloseImagePicker : SignUpEvent()
     object SignUp : SignUpEvent()
 }

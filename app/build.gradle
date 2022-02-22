@@ -98,6 +98,14 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
 }
 */
+
+//------------accompanist------------
+dependencies {
+    def last_version="0.24.2-alpha"
+    implementation "com.google.accompanist:accompanist-permissions:$last_version"
+    implementation "io.coil-kt:coil-compose:$last_version"
+}
+
 //-------------retrofit-----------
 dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.3'

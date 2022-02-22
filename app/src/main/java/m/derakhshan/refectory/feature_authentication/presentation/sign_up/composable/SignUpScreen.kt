@@ -9,26 +9,28 @@ import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Camera
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import kotlinx.coroutines.flow.collectLatest
 import m.derakhshan.refectory.R
 import m.derakhshan.refectory.core.data.data_source.Setting
@@ -118,9 +120,12 @@ fun SignUpScreen(
                         .padding(MaterialTheme.spacing.extraSmall),
                 ) {
                     Image(
-                        painter = painterResource(id = R.mipmap.default_avatar),
+                        painter = rememberImagePainter(state.photo ?: R.mipmap.default_avatar),
                         contentDescription = "default avatar",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
                     )
                 }
                 IconButton(
@@ -228,6 +233,31 @@ fun SignUpScreen(
                 viewModel.onEvent(SignUpEvent.SignUp)
             }
         }
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            ImagePickerDialog(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        MaterialTheme.colors.background,
+                        shape = RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp)
+                    )
+                    .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                    .shadow(5.dp, RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp)),
+                height = 550.dp,
+                openSelection = state.openImagePicker,
+                context = LocalContext.current,
+                onCloseListener = { viewModel.onEvent(SignUpEvent.CloseImagePicker) },
+            ) { uri ->
+                viewModel.onEvent(SignUpEvent.CloseImagePicker)
+                viewModel.onEvent(SignUpEvent.PhotoChanged(uri))
+            }
+        }
+
 
         IconButton(
             onClick = { navController.navigateUp() }
